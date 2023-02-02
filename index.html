@@ -107,10 +107,11 @@
               <input id="btn_gen" type="submit" value="Générer"/>
             </div>
             <div class="grid nopadtop nopadbot">
-              <input id="gn" type="text" value="" readonly>
+              <input id="gn" type="password" value="" readonly>
+              <button id="btn_shw" type="button" class="secondary outline">Afficher</button>
             </div>
             <div class="grid nopadtop nopadbot">
-              <button id="btn_cpy" type="button" class="secondary">Copier le mot de passe</button>
+              <button id="btn_cpy" type="button" class="secondary">Copier</button>
             </div>
           </form>
         </div>
@@ -120,8 +121,8 @@
     <bodyfooter>
       <div class="grid">
         <div>
-          <small><a target="_blank" href="https://philjbt.github.io/custos/" class="secondary">Version en ligne</a></small>
-          <small><a target="_blank" href="https://github.com/PhilJbt/philjbt.github.io/blob/main/custos/" class="secondary">Consulter les sources</a></small>
+          <small><a target="_blank" href="https://philjbt.github.io/Custos/" class="secondary">Version en ligne</a></small>
+          <small><a target="_blank" href="https://github.com/PhilJbt/Custos" class="secondary">Consulter les sources</a></small>
         </div>
         <div class="version_container">
           <small><p class="secondary version_content">v1.1b</p></small>
@@ -285,6 +286,24 @@ document.getElementById('sn').addEventListener("keypress", function(event) {
   }
 });
 
+function shw() {
+  // Get the read only input text DOM
+  var copyTextarea = document.getElementById('gn');
+  // Get the "Show" / "Hide" button
+  var showHideButton = document.getElementById('btn_shw');
+
+  // If the input type is password
+  if (copyTextarea.type === 'password') {
+    copyTextarea.type = 'text';
+    showHideButton.textContent = "Cacher";
+  }
+  // If the input type is text
+  else {
+    copyTextarea.type = 'password';
+    showHideButton.textContent = "Afficher";
+  }
+}
+
 // Copy the content of the input text with the generated password
 function cpy() {
   // Get the read only input text DOM
@@ -296,7 +315,12 @@ function cpy() {
 
   // Try to copy the selected content
   try {
-    var successful = document.execCommand('copy');
+    // Select the text field
+    copyTextarea.select();
+    copyTextarea.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyTextarea.value);
   }
   // The copy failed
   catch (err) {
@@ -308,14 +332,14 @@ function cpy() {
   }
 
   // Rename and change the color of the Copy button
-  document.getElementById('btn_cpy').textContent = 'Mot de passe copié !';
+  document.getElementById('btn_cpy').textContent = 'Copié !';
   document.getElementById('btn_cpy').classList.add('contrast');
   document.getElementById('btn_cpy').classList.remove('secondary');
 
   // Revert the Copy button's looking in 3 seconds
   setTimeout(function() {
     // Revert the name and the color of the Copy button
-    document.getElementById('btn_cpy').textContent = 'Copier le mot de passe';
+    document.getElementById('btn_cpy').textContent = 'Copier';
     document.getElementById('btn_cpy').classList.remove('contrast');
     document.getElementById('btn_cpy').classList.add('secondary');
   }, 3000);
@@ -360,6 +384,12 @@ window.onload = function() {
   document.getElementById('btn_cpy').addEventListener('click', function(event) {
     // Copy the generated password to the user clipboard
     cpy();
+  });
+
+  // Show button bind
+  document.getElementById('btn_shw').addEventListener('click', function(event) {
+    // Show the generated password
+    shw();
   });
 
 
