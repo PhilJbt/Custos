@@ -3,4 +3,4 @@ Générateur de mot de passe léger, monolithique, auto-hebergeable, comme utili
 
 Utilisable à cette adresse : https://philjbt.github.io/Custos/
 
-![Screenshot](screenshot.png)
+![Screenshot](custos.gif)
