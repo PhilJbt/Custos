@@ -301,6 +301,7 @@ function shw() {
 function resetClipboard() {
   let serviceName = document.getElementById('sn');
   serviceName.value = Math.random().toString(36).slice(2);
+  generate();
   cpy();
 
   var tempElement = document.createElement("input");
