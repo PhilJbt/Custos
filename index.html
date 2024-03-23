@@ -71,6 +71,12 @@
               <ul>
                 <li>
                   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16" id="btn_resetclipboard" class="icn">
+                    <path fill="#ffffff" d="M15.14,3C14.63,3 14.12,3.2 13.73,3.59L2.59,14.73C1.81,15.5 1.81,16.77 2.59,17.56L5.03,20H12.69L21.41,11.27C22.2,10.5 22.2,9.23 21.41,8.44L16.56,3.59C16.17,3.2 15.65,3 15.14,3M17,18L15,20H22V18"></path>
+                  </svg>
+                </li>
+                <li>
+                  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16" id="btn_lightmode" class="icn">
                     <path fill="#ffffff" d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zM2 8c0-3.314 2.686-6 6-6v12c-3.314 0-6-2.686-6-6z"></path>
                   </svg>
@@ -291,6 +297,21 @@ function shw() {
   }
 }
 
+// Reset user clipboard content
+function resetClipboard() {
+  let serviceName = document.getElementById('sn');
+  serviceName.value = Math.random().toString(36).slice(2);
+  cpy();
+
+  var tempElement = document.createElement("input");
+  tempElement.style.cssText = "width:0!important;padding:0!important;border:0!important;margin:0!important;outline:none!important;boxShadow:none!important;";
+  document.body.appendChild(tempElement);
+  tempElement.value = ' ';
+  tempElement.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempElement);
+}
+  
 // Copy the content of the input text with the generated password
 function cpy() {
   // Get the read only input text DOM
@@ -415,6 +436,7 @@ function lightmode(_init = false) {
     // Change the color of the buttons
     document.querySelector('#btn_lightmode').querySelector('path').style.fill = '#000000';
     document.querySelector('#btn_github').querySelector('path').style.fill = '#000000';
+    document.querySelector('#btn_resetClipboard').querySelector('path').style.fill = '#000000';
   }
   // If the light/dark mode has been clicked
   else if (_init === false) {
@@ -425,6 +447,7 @@ function lightmode(_init = false) {
       // Change the color of the buttons
       document.querySelector('#btn_lightmode').querySelector('path').style.fill = '#000000';
       document.querySelector('#btn_github').querySelector('path').style.fill = '#000000';
+      document.querySelector('#btn_resetClipboard').querySelector('path').style.fill = '#000000';
       // Store the information that the light mode is prefered
       localStorage.setItem('lightmode', 'true');
     }
@@ -435,6 +458,7 @@ function lightmode(_init = false) {
       // Change the color of the buttons
       document.querySelector('#btn_lightmode').querySelector('path').style.fill = '#ffffff';
       document.querySelector('#btn_github').querySelector('path').style.fill = '#ffffff';
+      document.querySelector('#btn_resetClipboard').querySelector('path').style.fill = '#ffffff';
       // Remove the information that the light mode is prefered
       localStorage.removeItem('lightmode');
     }
@@ -443,6 +467,8 @@ function lightmode(_init = false) {
 
 // When both DOM and resources are loaded
 window.addEventListener('load', (event) => {
+  // Bind the reset clipboard function to its button
+  document.querySelector('#btn_resetClipboard').addEventListener('click', function(){resetClipboard();}, false);
   // Bind the light mode function to its button
   document.querySelector('#btn_lightmode').addEventListener('click', function(){lightmode();}, false);
   // Use the lighting mode if it has already been selected
