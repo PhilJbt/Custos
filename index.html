@@ -39,7 +39,7 @@
           <div class="grid nopadbot nopadtop">
             <label for="lst">
               Sélectionner un ou plusieurs modificateurs (optionnel)
-              <details role="list">
+              <details class="dropdown">
                 <summary aria-haspopup="listbox">Modificateurs</summary>
                 <ul id="slc_mod" role="listbox">
                 </ul>
@@ -437,7 +437,7 @@ window.onload = function() {
   // Randomize the elements order in the modifiers dropdown
   while (mods.length > 0) {
     let rand = Math.floor(Math.random() * mods.length);
-    let frag = `<li><label><input class="npt_slc" type="checkbox" value="${mods[rand][1]}">${mods[rand][0]}</label></li>`;
+    let frag = `<li><label><input class="npt_slc" type="checkbox" value="${mods[rand][1]}"/>${mods[rand][0]}</label></li>`;
     document.getElementById('slc_mod').insertAdjacentHTML('beforeend', frag);
     mods.splice(rand, 1);
   }
